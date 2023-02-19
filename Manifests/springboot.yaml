@@ -15,11 +15,11 @@ spec:
       - name: dockercred
       containers: 
       - name: springbootcon
-        image: jeaggrey/spring-boot-mongo:5
-        resources: 
-          limits:
-            memory: "64Mi"
-            cpu: "100m"
+        image: jeaggrey/spring-boot-mongo:6
+        # resources: 
+        #   limits:
+        #     memory: "64Mi"
+        #     cpu: "100m"
         ports:
         - containerPort: 8080
 ---
