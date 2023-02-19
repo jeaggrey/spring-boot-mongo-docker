@@ -23,10 +23,10 @@ spec:
           - name: MONGO_INITDB_ROOT_PASSWORD
             value: devdb
           volumeMounts:
-          - name: mongopvc
+          - name: mongovol
             mountPath: /data/db 
       volumes: 
-      - name: mongopvc
+      - name: mongovol
         persistentVolumeClaim:
          claimName: mongopvc
 
@@ -35,12 +35,12 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: mongo
+  name: mongosvc
 spec:
   selector:
     app: mongoapp
   ports:
-  - port: 80
+  - port: 27017
     targetPort: 27017
 
 
@@ -59,3 +59,30 @@ spec:
     - ReadWriteOnce
 
 
+
+##https://aws.amazon.com/premiumsupport/knowledge-center/eks-persistent-storage/ 
+# Create EBS CSI ROLE WITH PERMISSIONS AND ATTACH TO NODES 
+
+# {
+#   "Version": "2012-10-17",
+#   "Statement": [
+#     {
+#       "Effect": "Allow",
+#       "Action": [
+#         "ec2:AttachVolume",
+#         "ec2:CreateSnapshot",
+#         "ec2:CreateTags",
+#         "ec2:CreateVolume",
+#         "ec2:DeleteSnapshot",
+#         "ec2:DeleteTags",
+#         "ec2:DeleteVolume",
+#         "ec2:DescribeInstances",
+#         "ec2:DescribeSnapshots",
+#         "ec2:DescribeTags",
+#         "ec2:DescribeVolumes",
+#         "ec2:DetachVolume"
+#       ],
+#       "Resource": "*"
+#     }
+#   ]
+# }
