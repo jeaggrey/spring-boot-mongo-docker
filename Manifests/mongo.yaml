@@ -13,7 +13,7 @@ spec:
         app: mongoapp
     spec:
       containers:
-        - name: myapp
+        - name: mongocon
           image: mongo
           ports:
             - containerPort: 27017
@@ -21,7 +21,16 @@ spec:
           - name: MONGO_INITDB_ROOT_USERNAME
             value: devdb   
           - name: MONGO_INITDB_ROOT_PASSWORD
-            value: devdb     
+            value: devdb
+          volumeMounts:
+          - name: mongopvc
+            mountPath: /data/db 
+      volumes: 
+      - name: mongopvc
+        persistentVolumeClaim:
+         claimName: mongopvc
+
+        
 ---
 apiVersion: v1
 kind: Service
@@ -33,4 +42,20 @@ spec:
   ports:
   - port: 80
     targetPort: 27017
+
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mongopvc
+spec:
+  storageClassName: ebs-sc
+  resources:
+    requests:
+      storage: 1Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+
 
