@@ -22,6 +22,14 @@ spec:
         #     cpu: "100m"
         ports:
         - containerPort: 8080
+        env:
+        - name: MONGO_DB_HOSTNAME
+          value: mongo
+        - name: MONGO_DB_USERNAME
+          value: devdb
+        - name: MONGO_DB_PASSWORD
+          value: devdb   
+
 ---
 apiVersion: v1
 kind: Service
